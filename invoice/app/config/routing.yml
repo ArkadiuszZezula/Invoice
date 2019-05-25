@@ -1,0 +1,8 @@
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+add:
+    path:      /add
+    defaults:  { _controller: AppBundle:Default:add }
+
