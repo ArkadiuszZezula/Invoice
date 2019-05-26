@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    <nav class="navbar">
+        <div class="col-12">
+            <span class="h2">Invoices</span>
+            <a href="{{ path('add') }}" class="btn btn-outline-primary float-right" role="button">Add new</a>
+
+        </div>
+    </nav>
     <div >
         <table class="table table-striped">
             <thead class="thead-dark">
@@ -14,23 +21,24 @@
                 <th scope="col">Items number</th>
                 <th scope="col">Action</th>
             </tr>
+
             </thead>
             <tbody>
             {% for invoice in invoices %}
                 <tr>
                     <td scope="row">{{ invoice.id }}</td>
                     <td scope="row">{{ invoice.nr }}</td>
-                    <td scope="row">{{ invoice.idBuyer }}</td>
+                    <td scope="row">{{ invoice.buyer.name}} {{ invoice.buyer.nip}}</td>
                     <td scope="row">{{ invoice.createdAt|date('Y-m-d') }}</td>
                     <td scope="row">{{ invoice.saleDate|date('Y-m-d') }}</td>
-                    <td scope="row">{{ invoice.termsPayment }}</td>
+                    <td scope="row">{{ termsPayment[invoice.termsPayment] }}</td>
                     <td scope="row">{{ invoice.bankAccount }}</td>
-                    {#<td>{{ invoice.items }}</td>#}
+                    <td scope="row">{{ invoice.items|length }}</td>
                     <td scope="row">
-                                <a class="btn btn-default btn-xs"
-                                   href="{{ path('edit', { 'id': invoice.id }) }}">show</a>
-                            <a class="btn btn-default btn-xs"
-                                   href="{{ path('delete', { 'id': invoice.id }) }}">edit</a>
+                                <a class="btn btn-primary btn-xs"
+                                   href="{{ path('edit', { 'id': invoice.id }) }}">Edit</a>
+                            <a class="btn btn-danger btn-xs"
+                                   href="{{ path('delete', { 'id': invoice.id }) }}">Delete</a>
 
                     </td>
                 </tr>
@@ -39,6 +47,3 @@
         </table>
     </div>
 {% endblock %}
-
-    {% block stylesheets %}
-    {% endblock %}

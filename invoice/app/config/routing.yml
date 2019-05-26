@@ -1,8 +1,16 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+index:
+    path:      /
+    defaults:  { _controller: AppBundle:Invoice:index }
 
 add:
     path:      /add
-    defaults:  { _controller: AppBundle:Default:add }
+    defaults:  { _controller: AppBundle:Invoice:add }
+
+edit:
+    path:      /edit
+    defaults:  { _controller: AppBundle:Invoice:edit }
+
+delete:
+    path:      /delete
+    defaults:  { _controller: AppBundle:Invoice:delete }
 

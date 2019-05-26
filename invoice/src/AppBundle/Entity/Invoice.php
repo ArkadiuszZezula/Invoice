@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Invoice
@@ -12,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Invoice
 {
+
     /**
      * @var integer
      *
@@ -69,6 +71,24 @@ class Invoice
      * @ORM\Column(name="bank_account", type="text", length=65535, nullable=true)
      */
     private $bankAccount;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvoiceItem", mappedBy="invoice")
+     */
+    private $items;
+
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Buyer")
+     * @ORM\JoinColumn(name="id_buyer", referencedColumnName="id")
+     */
+    private $buyer;
+
+
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+        $this->buyer = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -197,6 +217,39 @@ class Invoice
     {
         $this->bankAccount = $bankAccount;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+
+    /**
+     * @param mixed $items
+     */
+    public function setItems($items)
+    {
+        $this->items = $items;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBuyer()
+    {
+        return $this->buyer;
+    }
+
+    /**
+     * @param mixed $buyer
+     */
+    public function setBuyer($buyer)
+    {
+        $this->buyer = $buyer;
+    }
+
 
 }
 

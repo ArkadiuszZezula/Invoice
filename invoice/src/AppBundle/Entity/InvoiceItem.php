@@ -78,6 +78,12 @@ class InvoiceItem
     private $grossPrice;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Invoice", inversedBy="items")
+     * @ORM\JoinColumn(name="id_invoice", referencedColumnName="id")
+     */
+    private $invoice;
+
+    /**
      * @return int
      */
     public function getId()
@@ -220,6 +226,8 @@ class InvoiceItem
     {
         $this->grossPrice = $grossPrice;
     }
+
+
 
 }
 
