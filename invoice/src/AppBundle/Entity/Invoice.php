@@ -73,16 +73,15 @@ class Invoice
     private $bankAccount;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvoiceItem", mappedBy="invoice")
+     * @ORM\OneToMany(targetEntity="InvoiceItem", mappedBy="invoices", cascade={"persist"})
      */
     private $items;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Buyer")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Buyer", cascade={"persist"})
      * @ORM\JoinColumn(name="id_buyer", referencedColumnName="id")
      */
     private $buyer;
-
 
     public function __construct()
     {
@@ -227,9 +226,9 @@ class Invoice
     }
 
     /**
-     * @param mixed $items
+     * @param InvoiceItem $items
      */
-    public function setItems($items)
+    public function setItems(InvoiceItem $items)
     {
         $this->items = $items;
     }
@@ -249,7 +248,6 @@ class Invoice
     {
         $this->buyer = $buyer;
     }
-
 
 }
 

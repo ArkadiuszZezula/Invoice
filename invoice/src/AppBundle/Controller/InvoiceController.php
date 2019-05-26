@@ -13,10 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 
-
 class InvoiceController extends Controller
 {
-
 
     /**
      * @Route("/", name="list")
@@ -26,35 +24,38 @@ class InvoiceController extends Controller
         $invoiceRep = $this->getDoctrine()
             ->getRepository(Invoice::class);
         $invoices = $invoiceRep->findAll();
-//        var_dump($invoices[0]);
-//        var_dump($a>getName());
 
 
         return $this->render('AppBundle::list.html.twig', [
             'invoices' => $invoices,
             'termsPayment' => TermsPaymentEnum::getAllTermsPayment()
-            ]);
+        ]);
     }
 
 
     /**
      * @Route("/add/")
      */
-    public function addAction(){
+    public function addAction()
+    {
+        return $this->render('AppBundle::add.html.twig', [
+
+        ]);
+    }
+
+    /**
+     * @Route("/add/")
+     */
+    public function editAction()
+    {
 
     }
 
     /**
      * @Route("/add/")
      */
-    public function editAction(){
-
-    }
-
-    /**
-     * @Route("/add/")
-     */
-    public function deleteAction(){
+    public function deleteAction()
+    {
 
     }
 }

@@ -20,7 +20,7 @@ class TermsPaymentEnum
     ];
 
     /**
-     * @param  string $typeShortName
+     * @param  string $idTermPayment
      * @return string
      */
     public static function getTermsPaymentName($idTermPayment)
