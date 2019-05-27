@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Buyer
@@ -25,6 +26,7 @@ class Buyer
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank(message="Field name should not be blank")
      */
     private $name;
 
@@ -32,6 +34,11 @@ class Buyer
      * @var string
      *
      * @ORM\Column(name="nip", type="string", length=255)
+     * @Assert\Type(type="numeric", message="Field nip should be type numeric")
+     * @Assert\Length(min="10", max="10",
+     *      maxMessage="Field nip should have exactly 10 character",
+     *      minMessage="Field nip should have exactly 10 character")
+     * @Assert\NotBlank()
      */
     private $nip;
 

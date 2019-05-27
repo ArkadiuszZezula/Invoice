@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * InvoiceItem
@@ -24,7 +25,7 @@ class InvoiceItem
     /**
      * @var integer
      *
-     * @ORM\Column(name="id_invoice", type="bigint", nullable=false)
+     * @ORM\Column(name="id_invoice", type="bigint", nullable=true)
      */
     private $idInvoice;
 
@@ -39,6 +40,7 @@ class InvoiceItem
      * @var string
      *
      * @ORM\Column(name="quantity", type="text", length=65535, nullable=false)
+     * @Assert\NotBlank()
      */
     private $quantity;
 
@@ -46,6 +48,7 @@ class InvoiceItem
      * @var string
      *
      * @ORM\Column(name="unit", type="text", length=65535, nullable=false)
+     * @Assert\NotBlank()
      */
     private $unit;
 
@@ -78,7 +81,7 @@ class InvoiceItem
     private $grossPrice;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Invoice", inversedBy="items")
+     * @ORM\ManyToOne(targetEntity="Invoice", inversedBy="items", cascade={"persist"} )
      * @ORM\JoinColumn(name="id_invoice", referencedColumnName="id")
      */
     private $invoices;

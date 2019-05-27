@@ -7,6 +7,53 @@
 
         </div>
     </nav>
-    <div>
+    <div class="container">
+        {{ form_start(form) }}
+        {{ form_row(form.id_buyer) }}<a href="" class="btn btn-default btn-success" data-toggle="modal"
+                                        data-target="#modalBuyerForm">Add Buyer</a>
+
+        <div class="items" data-prototype="{{ form_widget(form.items.vars.prototype)|e('html_attr') }}">
+            {% for items in form.items %}
+                {{ form_row(items.name) }}
+            {% endfor %}
+        </div>
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
     </div>
+    
+    <div class="modal fade" id="modalBuyerForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Add buyer</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="md-form mb-5">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <input type="name" required id="buyerName" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="defaultForm-email">Name</label>
+                    </div>
+
+                    <div class="md-form mb-4">
+                        <i class="fas fa-lock prefix grey-text"></i>
+                        <input type="number" required id="buyerNip" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="defaultForm-pass">NIP</label>
+                    </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button id="saveBuyer" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/app/js/addInvoice.js') }}"></script>
 {% endblock %}

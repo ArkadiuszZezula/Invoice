@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Invoice
@@ -27,13 +28,15 @@ class Invoice
      * @var string
      *
      * @ORM\Column(name="nr", type="text", length=65535, nullable=true)
+     * @Assert\NotBlank()
      */
     private $nr;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="id_buyer", type="integer", nullable=false)
+     * @ORM\Column(name="id_buyer", type="integer", nullable=true)
+    //     * @Assert\NotBlank()
      */
     private $idBuyer;
 
@@ -41,6 +44,7 @@ class Invoice
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @Assert\NotBlank()
      */
     private $createdAt;
 
@@ -48,6 +52,7 @@ class Invoice
      * @var \DateTime
      *
      * @ORM\Column(name="sale_date", type="datetime", nullable=false)
+     * @Assert\NotBlank()
      */
     private $saleDate;
 
@@ -55,6 +60,7 @@ class Invoice
      * @var \DateTime
      *
      * @ORM\Column(name="payment_deadline", type="datetime", nullable=true)
+     * @Assert\NotBlank()
      */
     private $paymentDeadline;
 
@@ -62,6 +68,7 @@ class Invoice
      * @var integer
      *
      * @ORM\Column(name="terms_payment", type="integer", nullable=false)
+     * @Assert\NotBlank()
      */
     private $termsPayment;
 
@@ -69,11 +76,12 @@ class Invoice
      * @var string
      *
      * @ORM\Column(name="bank_account", type="text", length=65535, nullable=true)
+     * @Assert\NotBlank()
      */
     private $bankAccount;
 
     /**
-     * @ORM\OneToMany(targetEntity="InvoiceItem", mappedBy="invoices", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvoiceItem", mappedBy="invoices", cascade={"persist"})
      */
     private $items;
 
@@ -86,7 +94,6 @@ class Invoice
     public function __construct()
     {
         $this->items = new ArrayCollection();
-        $this->buyer = new ArrayCollection();
     }
 
     /**
@@ -226,11 +233,19 @@ class Invoice
     }
 
     /**
-     * @param InvoiceItem $items
+     * @param mixed $items
      */
-    public function setItems(InvoiceItem $items)
+    public function setItems($items)
     {
         $this->items = $items;
+    }
+
+    /**
+     * @param $items
+     */
+    public function addItems(InvoiceItem $items)
+    {
+        $this->items[] = $items;
     }
 
     /**

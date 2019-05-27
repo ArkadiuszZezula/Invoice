@@ -7,10 +7,14 @@ use AppBundle\Entity\Invoice;
 use AppBundle\Entity\InvoiceItem;
 use AppBundle\Entity\Buyer;
 use AppBundle\Enum\TermsPaymentEnum;
+use AppBundle\Form\InvoiceType;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping as ORM;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 
 class InvoiceController extends Controller
@@ -19,12 +23,11 @@ class InvoiceController extends Controller
     /**
      * @Route("/", name="list")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $invoiceRep = $this->getDoctrine()
             ->getRepository(Invoice::class);
         $invoices = $invoiceRep->findAll();
-
 
         return $this->render('AppBundle::list.html.twig', [
             'invoices' => $invoices,
@@ -32,30 +35,50 @@ class InvoiceController extends Controller
         ]);
     }
 
-
     /**
      * @Route("/add/")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
-        return $this->render('AppBundle::add.html.twig', [
+        $invoice = new Invoice();
+        $form = $this->createForm(InvoiceType::class, $invoice);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $post = $form->getData();
+            $em->persist($post);
+            $em->flush();
+        }
 
+        return $this->render('AppBundle::add.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/add/")
+     * @Route("/edit/")
      */
-    public function editAction()
+    public function editAction(Request $request)
     {
 
     }
 
     /**
-     * @Route("/add/")
+     * @Route("/delete/")
      */
-    public function deleteAction()
+    public function deleteAction(Request $request)
     {
-
+        $id = $request->get('id');
+        if ($id) {
+            $invoice = $this->getDoctrine()
+                ->getRepository(Invoice::class)
+                ->find($id);
+            $em = $this->getDoctrine()
+                ->getManager();
+            $em->remove($invoice);
+            $em->flush();
+        }
+        return $this->redirect('/');
     }
+
 }

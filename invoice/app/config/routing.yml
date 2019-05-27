@@ -7,10 +7,14 @@ add:
     defaults:  { _controller: AppBundle:Invoice:add }
 
 edit:
-    path:      /edit
+    path:      /edit/
     defaults:  { _controller: AppBundle:Invoice:edit }
 
 delete:
-    path:      /delete
+    path:      /delete/
     defaults:  { _controller: AppBundle:Invoice:delete }
+
+addBuyer:
+    path:      /buyer/add
+    defaults:  { _controller: AppBundle:Buyer:add }
 
